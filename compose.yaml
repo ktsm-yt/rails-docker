@@ -1,11 +1,11 @@
-version: "3.8"
-
 services:
   db:
     image: postgres:12
     volumes:
-      - db-data:/var/lib/postgresql/data
-    env_file: development.env
+      - postgres-db:/var/lib/postgresql/data
+    extends:
+      file: compose.common.yaml
+      service: common
   web:
     build:
       context: .
@@ -18,9 +18,11 @@ services:
       - "3000:3000"
     depends_on:
       - db
-    env_file: development.env
+    extends:
+      file: compose.common.yaml
+      service: common
     tty: true
     stdin_open: true
 volumes:
-  db-data:
+  postgres-db:
   gem_data:

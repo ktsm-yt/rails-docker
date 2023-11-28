@@ -1,0 +1,5 @@
+services:
+  common:
+    init: true
+    env_file: .env
+      
