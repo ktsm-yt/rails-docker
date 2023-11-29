@@ -1,6 +1,11 @@
 services:
   db:
     image: postgres:12
+    healthcheck:
+      test: "psql -U postgres"
+      interval: 5s
+      timeout: 5s
+      retries: 5
     volumes:
       - postgres-db:/var/lib/postgresql/data
     extends:
@@ -10,14 +15,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails db:create && bundle exec rails db:migrate && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - .:/rails-docker
       - gem_data:/usr/local/bundle
     ports:
       - "3000:3000"
     depends_on:
-      - db
+      db:  
+        condition: service_healthy
     extends:
       file: compose.common.yaml
       service: common
