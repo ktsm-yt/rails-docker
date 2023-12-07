@@ -8,10 +8,8 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/list/*
 WORKDIR /rails-docker
 
-COPY Gemfile /rails-docker/Gemfile
-COPY Gemfile.lock /rails-docker/Gemfile.lock
+COPY Gemfile Gemfile.lock /rails-docker/Gemfile
 
-RUN gem install bundler
 RUN bundle install
 
 #既存railsプロジェクトをコンテナ内にコピー
