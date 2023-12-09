@@ -2,14 +2,15 @@ FROM ruby:3.2.2
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     build-essential \
+    postgresql-client\
     vim \
 #無駄なインストールを省き、aptインストール時のキャッシュを削除してくれる。
     && apt-get clean \
     && rm -rf /var/lib/apt/list/*
+
 WORKDIR /rails-docker
 
-COPY Gemfile Gemfile.lock /rails-docker/Gemfile
-
+COPY Gemfile Gemfile.lock ./ 
 RUN bundle install
 
 #既存railsプロジェクトをコンテナ内にコピー
@@ -22,4 +23,4 @@ ENTRYPOINT ["entrypoint.sh"]
 
 EXPOSE 3000
 
-CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD ["./bin/rails", "server"]
