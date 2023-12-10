@@ -1,24 +1,24 @@
-# README
+## アプリ利用方法
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+ご自身の環境にて
+```
+git clone　(URL)
+```
+![こちらのURL](https://github.com/ktsm-yt/rails-docker/assets/99321574/0d48530e-14ef-483e-bdd7-2a652c52ac19)
+をコマンド入力して構築する。
 
-* Ruby version
 
-* System dependencies
+```
+docker compose build
+```
+```
+docker compose run web rails db:create db:migrate
+```
+```
+docker compose up　-d
+```
+の順でコマンドを入力した後、
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+http://0.0.0.0:3000/
+へアクセスすることで利用できる。
